@@ -4,7 +4,7 @@ from operators.snowflake.SnowflakeOperator import SnowflakeOperator
 from airflow.models import Variable, Connection
 from airflow.settings import AIRFLOW_HOME
 
-QUERY_PATH = './sql/youtube'
+QUERY_PATH = './sql/youtube/youtube_trend_init'
 SNOWFLAKE_CONN_ID = 'snowflake_conn_id'
 STORAGE_INTEGRATION_NAME = Variable.get('STORAGE_INTEGRATION_NAME')
 AZURE_TENANT_ID = Variable.get('AZURE_TENANT_ID')
@@ -66,5 +66,33 @@ with DAG(
         database=DATABASE_NAME
     )
 
-    create_schema >> create_storage_integration >> create_stage
+    create_file_formats = SnowflakeOperator(
+        task_id='create_file_formats',
+        snowflake_conn_id=SNOWFLAKE_CONN_ID,
+        sql='create_file_formats.sql',
+        params=DAG_PARAMETERS,
+        schema=SCHEMA_NAME,
+        database=DATABASE_NAME
+    )
+
+    create_external_table_youtube_category = SnowflakeOperator(
+        task_id='create_external_table_youtube_category',
+        snowflake_conn_id=SNOWFLAKE_CONN_ID,
+        sql='create_external_table_youtube_category.sql',
+        params=DAG_PARAMETERS,
+        schema=SCHEMA_NAME,
+        database=DATABASE_NAME
+    )
+
+    create_external_table_youtube_trending = SnowflakeOperator(
+        task_id='create_external_table_youtube_trending',
+        snowflake_conn_id=SNOWFLAKE_CONN_ID,
+        sql='create_external_table_youtube_trending.sql',
+        params=DAG_PARAMETERS,
+        schema=SCHEMA_NAME,
+        database=DATABASE_NAME
+    )
+
+    create_schema >> create_storage_integration >> create_stage \
+    >> create_file_formats >> [create_external_table_youtube_trending, create_external_table_youtube_category]
 

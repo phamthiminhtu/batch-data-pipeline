@@ -1,1 +1,0 @@
-CREATE OR REPLACE SCHEMA {{ params.schema_name }};

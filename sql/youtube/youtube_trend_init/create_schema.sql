@@ -1,0 +1,1 @@
+CREATE OR REPLACE SCHEMA {{ params.database_name }}.{{ params.schema_name }};
