@@ -77,7 +77,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
-    - /Users/tototus/workspace:/opt/airflow
+    - ${AIRFLOW_PROJ_DIR:-.}/sql:/opt/airflow/sql
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -163,6 +163,8 @@ services:
       # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
       DUMB_INIT_SETSID: "0"
     restart: always
+    tmpfs:
+      - '/opt/airflow/'
     depends_on:
       <<: *airflow-common-depends-on
       airflow-init:
