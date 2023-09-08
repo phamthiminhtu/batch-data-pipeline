@@ -5,5 +5,6 @@ Implemented pipelines and involved stacks are shown in the image below:
 
 This repo is still in its early stages. New features and implementation are coming.
 Future implementation:
+- Ingest data from other databases (Mysql, Postgres, etc.)
 - dbt for data transformation
 - Spark for data processing for ML  use cases
