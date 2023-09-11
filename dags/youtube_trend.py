@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from operators.snowflake.SnowflakeOperator import SnowflakeOperator
+from operators.microsoft.LocalFilesystemToAzureBlobStorageOperator import LocalFilesystemToAzureBlobStorageOperator
 from airflow.models import Variable, Connection
 from airflow.settings import AIRFLOW_HOME
 
@@ -48,6 +49,24 @@ with DAG(
     max_active_runs=1,
     template_searchpath=[QUERY_PATH]
 ) as dag:
+    
+    youtube_trending_to_azure_blob_storage = LocalFilesystemToAzureBlobStorageOperator(
+        task_id="youtube_trending_to_azure_blob_storage",
+        file_path=f"{AIRFLOW_HOME}/batch-data-pipeline/data/youtube-trending",
+        container_name='youtube_trending',
+        blob_name='',
+        wasb_conn_id="sas_token",
+        create_container=False
+    )
+
+    youtube_category_to_azure_blob_storage = LocalFilesystemToAzureBlobStorageOperator(
+        task_id="youtube_category_to_azure_blob_storage",
+        file_path=f"{AIRFLOW_HOME}/batch-data-pipeline/data/youtube-category",
+        container_name='youtube_category',
+        blob_name='',
+        wasb_conn_id="sas_token",
+        create_container=False
+    )
 
     youtube_trending = SnowflakeOperator(
         task_id='youtube_trending',
@@ -63,4 +82,4 @@ with DAG(
         params=DAG_PARAMETERS
     )
 
-    youtube_trending >> youtube_final
+   [youtube_trending_to_azure_blob_storage, youtube_category_to_azure_blob_storage] >> youtube_trending >> youtube_final
