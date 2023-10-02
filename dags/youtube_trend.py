@@ -82,4 +82,4 @@ with DAG(
         params=DAG_PARAMETERS
     )
 
-   [youtube_trending_to_azure_blob_storage, youtube_category_to_azure_blob_storage] >> youtube_trending >> youtube_final
+    [youtube_trending_to_azure_blob_storage, youtube_category_to_azure_blob_storage] >> youtube_trending >> youtube_final
