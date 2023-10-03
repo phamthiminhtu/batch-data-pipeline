@@ -10,17 +10,19 @@ from airflow.providers.google.cloud.operators.dataproc import (
 from airflow.models import Variable, Connection
 from airflow.settings import AIRFLOW_HOME
 
-GCS_BUCKET_NAME = 'tototus-1'
-GCP_CONN_ID = 'gcp_conn_id'
-CLUSTER_NAME = 'nyctaxicluster'
-PROJECT_ID = 'batch-data-pipeline-398705'
+GCS_BUCKET_NAME = Variable.get('GCS_BUCKET_NAME')
+GCP_CONN_ID = Variable.get('GCP_CONN_ID')
+CLUSTER_NAME = Variable.get('DATAPROC_CLUSTER_NAME')
+PROJECT_ID = Variable.get('DATAPROC_PROJECT_ID')
 REGION = 'us-central1'
 PYSPARK_URI_PREFIX = f'gs://{GCS_BUCKET_NAME}/nyc_taxi/spark-job'
 
-PYSPARK_JOB = {
-    "reference": {"project_id": PROJECT_ID},
-    "placement": {"cluster_name": CLUSTER_NAME},
-    "pyspark_job": {"main_python_file_uri": f'{PYSPARK_URI_PREFIX}/spark__clean_data.py'},
+PYSPARK_JOBS = {
+    'clean_data': {
+            "reference": {"project_id": PROJECT_ID},
+            "placement": {"cluster_name": CLUSTER_NAME},
+            "pyspark_job": {"main_python_file_uri": f'{PYSPARK_URI_PREFIX}/spark__clean_data.py'},
+        }
 }
 
 CLUSTER_CONFIG = ClusterGenerator(
@@ -81,10 +83,20 @@ with DAG(
 
     spark_clean_data = DataprocSubmitJobOperator(
         task_id="spark_clean_data", 
-        job=PYSPARK_JOB, 
+        job=PYSPARK_JOBS.get('clean_data'), 
         region=REGION, 
         project_id=PROJECT_ID,
         gcp_conn_id=GCP_CONN_ID
     )
 
-    [taxi_data_to_gcs, sync_spark_jobs_to_gcs] >> create_spark_cluster >> spark_clean_data
+    delete_cluster = DataprocDeleteClusterOperator(
+        task_id="delete_cluster", 
+        project_id=PROJECT_ID, 
+        cluster_name=CLUSTER_NAME, 
+        region=REGION,
+        gcp_conn_id=GCP_CONN_ID
+    )
+
+    [taxi_data_to_gcs, sync_spark_jobs_to_gcs] >> create_spark_cluster \
+    >> spark_clean_data >> delete_cluster
+

@@ -4,3 +4,4 @@ data/
 *.pid
 airflow.cfg
 webserver_config.py
+data/
