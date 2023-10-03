@@ -11,7 +11,8 @@ Up to now there are 2 main projects:
 
 Implemented pipelines are shown in the image below:
 
-![batch-data-pipeline](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/312a280c-7751-4e34-b9c5-45ce386a0dad)
+![batch-data-pipeline (1)](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/8889d1b1-0b17-40cd-bce9-70d0e65cb077)
+
 
 This repo is still in its early stages. New features and implementation are coming.
 Future implementation:
