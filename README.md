@@ -1,5 +1,5 @@
 # batch-data-pipeline
-This repo is to centralize the batch data processing (ELT) pipelines with Airflow that I have implemented in different personal projects.
+This repo is to centralize the batch data processing (ELT) pipelines built on Apache Airflow that I have implemented in different personal projects.
 Up to now there are 2 main projects:
 - Data ingestion and transformation on [Youtube trending dataset](https://www.kaggle.com/datasets/rsrishav/youtube-trending-video-dataset/data):
   - Load JSON and CSV files from a local server to Azure Blob Storage.
