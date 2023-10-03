@@ -5,7 +5,7 @@ Up to now there are 2 main projects:
   - Load JSON and CSV files from a local server to Azure Blob Storage.
   - Ingest them into Snowflake where transformation steps were performed.
   
-- Data pre-processing for ML model using Spark (Dataproc):
+- Data pre-processing for ML model on [nyc_taxi dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page):
   - Load parquet files from a local server to Google Cloud Storage.
   - Clean this big dataset (~730 million records) using SparkSQL on Cloud Dataproc and load the cleaned data back to GCS.
 
