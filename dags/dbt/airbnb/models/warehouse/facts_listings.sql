@@ -1,22 +1,11 @@
-{#-
-	This model uses the "delete+insert" (i.e. insert overwrite) strategy
-	using the <run_date> and <interval> (interval = 2 by default) variables:
-		Because postgres does not support "insert overwrite" strategy, we use
-		the "delete+insert" strategy instead:
-		- dbt will delete data with scraped_date in the [run_date - 2,  run_date] range
-		and insert new data of that date range.
-		- The config `unique_key='scraped_date'` is used for this purpose, 
-		although scraped_date is not the unique_key of the table. This setting is equal
-		to the "insert overwrite" strategy in other databases.
+{# Get vars from airflow #}
+{% set model_params = get_vars_from_airflow() %}
 
-	A few ways to define run_date variable:
-		1. Define the run_date (and interval) in dbt_profiles.yml (default)
-		2. Override run_date (and interval) in dbt_profiles.yml by passing vars using
-			cli. e.g: `dbt run --vars '{"run_date": "2023-10-01"}'`
-		3. Run with run_date=today by deleting the run_date in dbt_profiles.yml.
--#}
-{%- set run_date = var('run_date', modules.datetime.datetime.today().strftime("%Y-%m-%d")) -%}
-{%- set interval = var('interval') -%}
+{#- define number of dates to back fill data based on running hour -#}
+{%- do get_dynamic_look_back_in_day(model_params) -%}
+
+{#- update model_params with useful date variables -#}
+{%- do get_common_model_params(model_params) -%}
 
 {{ config(
 		partition_by=['scraped_date'],
@@ -40,9 +29,8 @@ WITH
 
 	,listings_stg AS
 		(SELECT * FROM {{ ref("listings_stg") }}
-		-- insert overwrite 3 day data: from run_date - 2 to run_date
 		{% if is_incremental() %}
-			WHERE scraped_date BETWEEN ('{{ run_date }}'::DATE - INTERVAL '{{ interval }} DAY')::DATE AND ('{{ run_date }}')::DATE
+			WHERE scraped_date IN ( {{ model_params.partitions_quoted | join(',') }})
 		{% endif %}
 		)
 

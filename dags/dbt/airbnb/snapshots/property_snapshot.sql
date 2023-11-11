@@ -1,5 +1,5 @@
-{% snapshot property_snapshot %}
-{%- set run_date = var('run_date', modules.datetime.datetime.today().strftime("%Y-%m-%d")) -%}
+{# Get vars from airflow #}
+{% set model_params = get_vars_from_airflow() %}
 
 {{ config(
   strategy="timestamp",
@@ -14,7 +14,7 @@ WITH
       ROW_NUMBER() OVER(PARTITION BY listing_id ORDER BY scraped_date DESC) AS _row_number
     FROM {{ source('airbnb_raw', 'listings') }}
     -- only run 1 date of data to backfill data in the past
-    WHERE scraped_date = '{{ run_date }}'::DATE
+    WHERE scraped_date = '{{ model_params.ds_date }}'::DATE
     )
 
   SELECT
