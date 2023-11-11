@@ -5,3 +5,10 @@ data/
 airflow.cfg
 webserver_config.py
 data/
+.env
+target/
+dbt_packages/
+logs/
+.python-version
+archived/
+.user.yml

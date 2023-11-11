@@ -1,0 +1,1 @@
+SELECT * FROM {{ ref('host_stg') }}
