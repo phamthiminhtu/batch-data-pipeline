@@ -14,11 +14,9 @@ Up to now there are 3 main projects:
 - Data transformation on [Airbnb dataset](https://public.opendatasoft.com/explore/dataset/airbnb-listings/) using dbt, Astronomer Cosmos and Airflow:
   - Transform the ingested data in Postgres SQL (hosted on Google Cloud SQL) using dbt.
   - Orchestrate dbt models using Airflow via Astronomer Cosmos.
-  - TO DO:
+  - TO-DO:
     - Incorporate data ingestion jobs: load data from Postgres database to modern data warehouse (Bigquery/ Snowflake).
     - Connect dbt with the new data warehouse instead of Postgres.
-  - The DAG running dbt models using Cosmos is shown in the image below.
-    <img width="879" alt="Screenshot 2023-11-12 at 09 17 03" src="https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/be5336be-a986-4d6c-bec1-af7044b883be">
 
 Implemented pipelines are shown in the image below:
 ![batch-data-pipeline (2)](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/2e11f42e-72c5-4f8f-8e29-0c6add1dd708)
