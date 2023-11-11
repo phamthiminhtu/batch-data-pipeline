@@ -19,5 +19,6 @@ Up to now there are 3 main projects:
     - Connect dbt with the new data warehouse instead of Postgres.
 
 Implemented pipelines are shown in the image below:
-![batch-data-pipeline (2)](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/2e11f42e-72c5-4f8f-8e29-0c6add1dd708)
+
+![batch-data-pipeline (3)](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/c66098ce-21f6-42e3-b0e4-6620b411192f)
 
