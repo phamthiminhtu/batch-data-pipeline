@@ -1,0 +1,1 @@
+SELECT * FROM {{ ref('lga_stg') }}

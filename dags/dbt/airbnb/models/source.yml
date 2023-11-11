@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: airbnb_raw
+    database: postgres  
+    schema: airbnb_raw
+    tables:
+      - name: census_lga_g01
+      - name: census_lga_g02
+      - name: listings
+      - name: nsw_lga_code
+      - name: nsw_lga_suburb
