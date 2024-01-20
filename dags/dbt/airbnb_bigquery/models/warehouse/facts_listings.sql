@@ -2,10 +2,10 @@
 {% set model_params = get_vars_from_airflow() %}
 
 {#- define number of dates to back fill data based on running hour -#}
-{%- do get_dynamic_look_back_in_day(model_params) -%}
+{% do get_dynamic_look_back_in_day(model_params) %}
 
 {#- update model_params with useful date variables -#}
-{%- do get_common_model_params(model_params) -%}
+{% do get_common_model_params(model_params) %}
 
 {{ config(
 		partition_by=['scraped_date'],

@@ -1,0 +1,1 @@
+SELECT * FROM {{ ref('census_1_stg') }}
