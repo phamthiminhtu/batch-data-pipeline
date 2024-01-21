@@ -14,7 +14,7 @@ WITH
       ROW_NUMBER() OVER(PARTITION BY host_id ORDER BY scraped_date DESC) AS _row_number
     FROM {{ source('airbnb_raw', 'listings') }}
     -- only run 1 date of data to backfill data in the past
-    WHERE scraped_date = '{{ model_params.ds_date }}'::DATE)
+    WHERE scraped_date = '{{ model_params.ds_date }}')
 
   SELECT
     host_id,

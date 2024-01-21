@@ -13,3 +13,4 @@ logs/
 archived/
 .user.yml
 .DS_Store
+config/credentials/*

@@ -2,11 +2,9 @@ bde:
   target: dev
   outputs:
     dev:
-      database: postgres
-      type: postgres
+      type: bigquery
+      method: oauth
+      project: kafka-408805
+      dataset: airbnb_bigquery
       threads: 4
-      host: localhost
-      port: 5432
-      user: airflow
-      password: airflow
-      schema: airbnb_raw
+      location: australia-southeast1

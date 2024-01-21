@@ -21,7 +21,7 @@
       dbt_scd_id,
       dbt_updated_at,
       -- handle cases when snapshot tables are created after the data was generated
-      CASE WHEN DATE(dbt_valid_from) = DATE(m.min_dbt_valid_from) THEN '1111-01-01'::TIMESTAMP ELSE dbt_valid_from END AS dbt_valid_from,
+      CASE WHEN DATE(dbt_valid_from) = DATE(m.min_dbt_valid_from) THEN TIMESTAMP('1111-01-01') ELSE dbt_valid_from END AS dbt_valid_from,
       dbt_valid_to
     FROM source_data AS s
     CROSS JOIN get_min_dbt_valid_from AS m

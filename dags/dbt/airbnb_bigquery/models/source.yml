@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: airbnb_raw
-    database: postgres  
+    database: kafka-408805
     schema: airbnb_raw
     tables:
       - name: census_lga_g01

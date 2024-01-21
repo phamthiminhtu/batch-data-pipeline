@@ -41,7 +41,9 @@ CENSUS_LGA_G02_COLUMNS = Variable.get('CENSUS_LGA_G02_COLUMNS')
 LISTINGS_COLUMNS = Variable.get('LISTINGS_COLUMNS')
 NSW_LGA_CODE_COLUMNS = Variable.get('NSW_LGA_CODE_COLUMNS')
 NSW_LGA_SUBURB_COLUMNS = Variable.get('NSW_LGA_SUBURB_COLUMNS')
-DBT_PROJECT_PATH = f"{AIRFLOW_HOME}/dags/dbt/airbnb"
+DBT_PROJECT_PATH = f"{AIRFLOW_HOME}/dags/dbt/airbnb_bigquery"
+GCP_PROJECT = "kafka-408805"
+BIGQUERY_DATASET = "airbnb_bigquery"
 # The path where Cosmos will find the dbt executable
 # in the virtual environment created in the Dockerfile
 DBT_EXECUTABLE_PATH = f"{AIRFLOW_HOME}/dbt_venv/bin/dbt"
@@ -54,18 +56,20 @@ DATA_DIRS = {
     "NSW_LGA_SUBURB": NSW_LGA_SUBURB_COLUMNS
 }
 
-POSTGRES_CONN_ID = "postgres"
+BIGQUERY_CONN_ID = "gcp_connection"
 
 profile_config = ProfileConfig(
         profile_name="bde",
         target_name="dev",
         profile_mapping=PostgresUserPasswordProfileMapping(
-            conn_id="postgres",
-            profile_args={"schema": "airbnb_raw",
-                        "host": "localhost",
-                        "dbname": "airflow",
-                        "user": "airflow",
-                        "password": "airflow"},
+            conn_id=BIGQUERY_CONN_ID,
+            profile_args={
+                "type": "bigquery",
+                "method": "oauth",
+                "project": GCP_PROJECT,
+                "dataset": BIGQUERY_DATASET,
+                "threads": 4
+            }
         ),
     )
 
@@ -80,7 +84,7 @@ execution_config = ExecutionConfig(
     max_active_runs=1,
     concurrency=5
 )
-def my_simple_dbt_dag():
+def airbnb_dbt_cosmos():
 
     def load_one_csv_file_to_posgres_table(
             data_path,
@@ -92,7 +96,7 @@ def my_simple_dbt_dag():
         ):
 
         # set up pg connection
-        ps_pg_hook = PostgresHook(postgres_conn_id=POSTGRES_CONN_ID)
+        ps_pg_hook = PostgresHook(postgres_conn_id=BIGQUERY_CONN_ID)
         conn_ps = ps_pg_hook.get_conn()
         file_path = f'{data_path}/{file_name}'
 
@@ -163,14 +167,7 @@ def my_simple_dbt_dag():
 
         logging.info(f"Finish loading files {filelist}. Total {total_row_count} records inserted.")
 
-        return output_table
-
-
-    #########################################################
-    #
-    #   DAG Operator Setup
-    #
-    #########################################################
+        return output_table 
 
     transform_data = DbtTaskGroup(
         group_id="transform_data",
@@ -198,4 +195,4 @@ def my_simple_dbt_dag():
         )
         tmp_task >> transform_data
 
-my_simple_dbt_dag()
+airbnb_dbt_cosmos()

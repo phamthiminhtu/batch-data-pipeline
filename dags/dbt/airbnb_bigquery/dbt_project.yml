@@ -22,7 +22,7 @@ snapshot-paths: ["snapshots"]
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
-
+target-path: target
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -52,3 +52,4 @@ snapshots:
 vars:
   run_date: '2021-04-15'
   interval: 2
+

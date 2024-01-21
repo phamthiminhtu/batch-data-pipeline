@@ -2,17 +2,19 @@
 {% set model_params = get_vars_from_airflow() %}
 
 {#- define number of dates to back fill data based on running hour -#}
-{% do get_dynamic_look_back_in_day(model_params) %}
+{% set result = get_dynamic_look_back_in_day(model_params) %}
 
 {#- update model_params with useful date variables -#}
-{% do get_common_model_params(model_params) %}
+{% set result = get_common_model_params(model_params) %}
 
 {{ config(
-		partition_by=['scraped_date'],
-		unique_key='scraped_date',
-		partition_type="date",
+		partition_by={
+			'field': 'scraped_date',
+			'data_type': 'date',
+		},
 		materialized='incremental',
-		incremental_strategy='delete+insert',
+		incremental_strategy='insert_overwrite',
+		partitions=model_params.partitions_quoted
 )
 }}
 
@@ -45,8 +47,8 @@ WITH
 		ds.lga_name AS host_neighbourhood_lga
 	FROM listings_stg AS l
 	LEFT JOIN dim_property AS dp
-	ON l.listing_id = dp.listing_id AND l.scraped_date >= dp.dbt_valid_from AND l.scraped_date < COALESCE(dp.dbt_valid_to, '9999-01-01'::TIMESTAMP)
+	ON l.listing_id = dp.listing_id AND l.scraped_date >= dp.dbt_valid_from AND l.scraped_date < COALESCE(dp.dbt_valid_to, TIMESTAMP('9999-01-01'))
 	LEFT JOIN dim_host AS dh
-	ON l.host_id = dh.host_id AND l.scraped_date >= dh.dbt_valid_from AND l.scraped_date < COALESCE(dh.dbt_valid_to, '9999-01-01'::TIMESTAMP)
+	ON l.host_id = dh.host_id AND l.scraped_date >= dh.dbt_valid_from AND l.scraped_date < COALESCE(dh.dbt_valid_to, TIMESTAMP('9999-01-01'))
 	LEFT JOIN dim_suburb AS ds
-	ON dh.host_neighbourhood = ds.suburb_name AND l.scraped_date >= ds.dbt_valid_from AND l.scraped_date < COALESCE(ds.dbt_valid_to, '9999-01-01'::TIMESTAMP)
+	ON dh.host_neighbourhood = ds.suburb_name AND l.scraped_date >= ds.dbt_valid_from AND l.scraped_date < COALESCE(ds.dbt_valid_to, TIMESTAMP('9999-01-01'))
