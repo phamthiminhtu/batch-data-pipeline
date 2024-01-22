@@ -28,7 +28,7 @@ Up to now there are 3 main projects:
       - Transform the ingested data in Postgres SQL (hosted on Google Cloud SQL) using dbt.
       - Orchestrate dbt models using Airflow via Astronomer Cosmos.
     - Limitations:
-      - Do not store raw data in the staging area -> can not perform "look-back-in-time" operations when needed.
+      - Do not store raw data in the staging area, thus do not support complex transformations, do not support error handling and auditing nor data versioning and rolling back.
       - Postgres database is a good fit for certain transactional workloads instead of analytics operations.
     - Code:
       - DAG location: [dags/airbnb/airbnb_postgres_dbt_cosmos.py](https://github.com/phamthiminhtu/batch-data-pipeline/blob/master/dags/airbnb/airbnb_postgres_dbt_cosmos.py)
