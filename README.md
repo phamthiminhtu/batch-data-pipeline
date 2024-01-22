@@ -1,6 +1,9 @@
 # batch-data-pipeline
 This repo is to centralize the batch data processing (ELT) pipelines built on Apache Airflow that I have implemented in different personal projects.
-Disclaimer: the tools and technologies used in this project are for the purpose of exploring new tools. Therefore, they might not be the best architectures for a specific use case.
+Side note: the tools and technologies used in this project are for the purpose of exploring new tools. Therefore, they might not be the best architectures for a specific use case.
+
+Implemented pipelines are shown in the image below:
+![batch-data-pipeline](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/b43e7b4e-f6ca-4b01-aa44-ee3864590675)
 
 Up to now there are 3 main projects:
 - Project 1: Data ingestion and transformation with [Youtube trending dataset](https://www.kaggle.com/datasets/rsrishav/youtube-trending-video-dataset/data):
@@ -41,10 +44,6 @@ Up to now there are 3 main projects:
       - dbt models: [dags/dbt/airbnb_bigquery](https://github.com/phamthiminhtu/batch-data-pipeline/tree/master/dags/dbt/airbnb_bigquery)
     - Screen shot of the DAG:
 <img width="1393" alt="Screenshot 2024-01-22 at 22 49 00" src="https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/1ee96e62-0846-4c32-9751-173721043415">
-
-
-Implemented pipelines are shown in the image below:
-![batch-data-pipeline](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/b43e7b4e-f6ca-4b01-aa44-ee3864590675)
 
 
 
