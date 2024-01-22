@@ -1,6 +1,6 @@
 # batch-data-pipeline
 This repo is to centralize the batch data processing (ELT) pipelines built on Apache Airflow that I have implemented in different personal projects.
-Side note: the tools and technologies used in this project are for the purpose of exploring new tools. Therefore, they might not be the best architectures for a specific use case.
+- Side note: the tools and technologies used in this project are for the purpose of exploring new tools. Therefore, they might not be the best architectures for a specific use case.
 
 Implemented pipelines are shown in the image below:
 ![batch-data-pipeline](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/b43e7b4e-f6ca-4b01-aa44-ee3864590675)
