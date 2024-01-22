@@ -3,7 +3,8 @@ This repo is to centralize the batch data processing (ELT) pipelines built on Ap
   - Side note: the tools and technologies used in this project are for the purpose of exploring new tools. Therefore, they might not be the best architectures for a specific use case.
 
 - Implemented pipelines are shown in the image below:
-![batch-data-pipeline](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/c216a10a-dc42-4d8d-a7f7-97aa107e7ecb)
+![batch-data-pipeline](https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/451038b1-7a5c-41b4-882c-417141907f57)
+
 
 ## Project overview:
 Up to now there are 3 main projects:
