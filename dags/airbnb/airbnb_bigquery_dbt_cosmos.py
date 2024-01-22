@@ -18,7 +18,6 @@ from cosmos.profiles import GoogleCloudServiceAccountFileProfileMapping
 from airflow.settings import AIRFLOW_HOME
 from operators.gcp.LocalFilesystemToGCSOperator import LocalFilesystemToGCSOperator
 from operators.gcp.GCSToBigQueryOperator import GCSToBigQueryOperator
-from airflow.operators.python import get_current_context
 
 
 
@@ -79,6 +78,7 @@ def airbnb_dbt_cosmos():
     def ingest_data():
         for folder in DATA_DIRS:
             task_dict = {
+                    "refine_source_data": f"{folder}__refine_source_data",
                     "local_data_to_gcs": f"{folder}__upload_data_from_local_to_gcs",
                     "local_schema_to_gcs": f"{folder}__upload_schema_from_local_to_gcs",
                     "gcs_to_bigquery": f"{folder}__gcs_to_bigquery",
@@ -86,7 +86,7 @@ def airbnb_dbt_cosmos():
 
             local_data_to_gcs = LocalFilesystemToGCSOperator(
                 task_id=task_dict.get("local_data_to_gcs"),
-                src=f"{AIRFLOW_HOME}/data/airbnb/{folder}",
+                src=f"{AIRFLOW_HOME}/data/airbnb/source/{folder}",
                 bucket=GCS_BUCKET_NAME,
                 gcp_conn_id=BIGQUERY_CONN_ID,
                 dst=''

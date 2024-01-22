@@ -152,5 +152,12 @@
       "type": "FLOAT64",
       "description": null,
       "fields": []
+    },
+    {
+      "name": "ingestion_timestamp",
+      "mode": "",
+      "type": "TIMESTAMP",
+      "description": null,
+      "fields": []
     }
   ]
