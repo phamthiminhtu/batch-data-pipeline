@@ -108,7 +108,7 @@ def airbnb_dbt_cosmos():
                 destination_project_dataset_table=f"{GCP_PROJECT}.{BIGQUERY_DATASET}.{folder}",
                 gcp_conn_id=BIGQUERY_CONN_ID,
                 schema_object=f"{DATA_SCHEMA_RELATIVE_PATH}/{folder}/*.json",
-                # write_disposition="WRITE_APPEND",
+                write_disposition="WRITE_TRUNCATE",
                 ignore_unknown_values=True
             )
 
