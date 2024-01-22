@@ -18,7 +18,6 @@ from cosmos.profiles import GoogleCloudServiceAccountFileProfileMapping
 from airflow.settings import AIRFLOW_HOME
 from operators.gcp.LocalFilesystemToGCSOperator import LocalFilesystemToGCSOperator
 from operators.gcp.GCSToBigQueryOperator import GCSToBigQueryOperator
-from airflow.operators.python import get_current_context
 
 
 
@@ -50,8 +49,8 @@ DATA_DIRS = {
     "census_lga_g01": CENSUS_LGA_G01_COLUMNS,
     "census_lga_g02": CENSUS_LGA_G02_COLUMNS,
     "listings": LISTINGS_COLUMNS,
-    "NSW_LGA_CODE": NSW_LGA_CODE_COLUMNS,
-    "NSW_LGA_SUBURB": NSW_LGA_SUBURB_COLUMNS
+    "nsw_lga_code": NSW_LGA_CODE_COLUMNS,
+    "nsw_lga_suburb": NSW_LGA_SUBURB_COLUMNS
 }
 
 # The path where Cosmos will find the dbt executable
@@ -81,12 +80,12 @@ def airbnb_dbt_cosmos():
             task_dict = {
                     "local_data_to_gcs": f"{folder}__upload_data_from_local_to_gcs",
                     "local_schema_to_gcs": f"{folder}__upload_schema_from_local_to_gcs",
-                    "gcs_to_bigquery": f"{folder}__append_only__gcs_to_bigquery",
+                    "gcs_to_bigquery": f"{folder}__gcs_to_bigquery",
                 }
 
             local_data_to_gcs = LocalFilesystemToGCSOperator(
                 task_id=task_dict.get("local_data_to_gcs"),
-                src=f"{AIRFLOW_HOME}/data/airbnb/{folder}",
+                src=f"{AIRFLOW_HOME}/data/airbnb/source/{folder}",
                 bucket=GCS_BUCKET_NAME,
                 gcp_conn_id=BIGQUERY_CONN_ID,
                 dst=''
@@ -105,10 +104,10 @@ def airbnb_dbt_cosmos():
                 task_id=task_dict.get("gcs_to_bigquery"),
                 bucket=GCS_BUCKET_NAME,
                 source_objects=local_data_to_gcs.output, # XCOM now can be accessed via output https://www.astronomer.io/blog/advanced-xcom-configurations-and-trigger-rules-tips-and-tricks-to-level-up-your-airflow-dags/
-                destination_project_dataset_table=f"{GCP_PROJECT}.append_only__{BIGQUERY_DATASET}.{folder}",
+                destination_project_dataset_table=f"{GCP_PROJECT}.{BIGQUERY_DATASET}.{folder}",
                 gcp_conn_id=BIGQUERY_CONN_ID,
                 schema_object=f"{DATA_SCHEMA_RELATIVE_PATH}/{folder}/*.json",
-                write_disposition="WRITE_APPEND",
+                write_disposition="WRITE_TRUNCATE",
                 ignore_unknown_values=True
             )
 

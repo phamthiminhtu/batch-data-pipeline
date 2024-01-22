@@ -2,7 +2,7 @@
     {
       "name": "LISTING_ID",
       "mode": "",
-      "type": "FLOAT64",
+      "type": "STRING",
       "description": null,
       "fields": []
     },
@@ -23,7 +23,7 @@
     {
       "name": "HOST_ID",
       "mode": "",
-      "type": "FLOAT64",
+      "type": "STRING",
       "description": null,
       "fields": []
     },
@@ -150,6 +150,13 @@
       "name": "REVIEW_SCORES_VALUE",
       "mode": "",
       "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "ingestion_timestamp",
+      "mode": "",
+      "type": "TIMESTAMP",
       "description": null,
       "fields": []
     }
