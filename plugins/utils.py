@@ -3,6 +3,7 @@ import sys
 import csv
 import json
 from datetime import datetime
+from airflow.settings import AIRFLOW_HOME
 
 
 class TusUtils:
@@ -110,7 +111,7 @@ class TusUtils:
 
         file_format = file_path.split('.')[-1]
         # .split('data/')[-1]: ignore the part before "data/" of the file path
-        blob_name = file_path.replace(f'.{file_format}', '').split('data/')[-1]
+        blob_name = file_path.replace(f'.{file_format}', '').split('data/')[-1].replace(f'{AIRFLOW_HOME}/', '')
         blob_with_hive_partition = f'{blob_name}/{hive_partition}*.{file_format}'
 
         return blob_with_hive_partition

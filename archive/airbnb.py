@@ -6,7 +6,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from psycopg2.extras import execute_values
 from airflow import AirflowException
-from airflow import DAG
+# from airflow import DAG
 from airflow.decorators import dag
 from airflow.models import Variable
 from airflow.operators.python_operator import PythonOperator

@@ -48,7 +48,7 @@ class LocalFilesystemToGCSOperator(LocalFilesystemToGCSOperatorBase):
                 datetime_var=ts
             )
             full_gcs_path = f"gcs://{self.bucket}/{blob_with_hive_partition}"
-            self.log.info(f"Uploading {filename} to full_gcs_path")
+            self.log.info(f"Uploading {filename} to {full_gcs_path}")
             hook.upload(
                 filename=filename,
                 timeout=self.connection_timeout,
@@ -56,6 +56,6 @@ class LocalFilesystemToGCSOperator(LocalFilesystemToGCSOperatorBase):
                 object_name=blob_with_hive_partition
             )
 
-            success_log.append(full_gcs_path)
+            success_log.append(blob_with_hive_partition)
         self.log.info(f"Finish loading files from source {self.src}.")
         return success_log
