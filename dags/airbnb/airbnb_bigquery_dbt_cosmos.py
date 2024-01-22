@@ -81,7 +81,7 @@ def airbnb_dbt_cosmos():
             task_dict = {
                     "local_data_to_gcs": f"{folder}__upload_data_from_local_to_gcs",
                     "local_schema_to_gcs": f"{folder}__upload_schema_from_local_to_gcs",
-                    "gcs_to_bigquery": f"{folder}__append_only__gcs_to_bigquery",
+                    "gcs_to_bigquery": f"{folder}__gcs_to_bigquery",
                 }
 
             local_data_to_gcs = LocalFilesystemToGCSOperator(
@@ -105,10 +105,10 @@ def airbnb_dbt_cosmos():
                 task_id=task_dict.get("gcs_to_bigquery"),
                 bucket=GCS_BUCKET_NAME,
                 source_objects=local_data_to_gcs.output, # XCOM now can be accessed via output https://www.astronomer.io/blog/advanced-xcom-configurations-and-trigger-rules-tips-and-tricks-to-level-up-your-airflow-dags/
-                destination_project_dataset_table=f"{GCP_PROJECT}.append_only__{BIGQUERY_DATASET}.{folder}",
+                destination_project_dataset_table=f"{GCP_PROJECT}.{BIGQUERY_DATASET}.{folder}",
                 gcp_conn_id=BIGQUERY_CONN_ID,
                 schema_object=f"{DATA_SCHEMA_RELATIVE_PATH}/{folder}/*.json",
-                write_disposition="WRITE_APPEND",
+                # write_disposition="WRITE_APPEND",
                 ignore_unknown_values=True
             )
 
