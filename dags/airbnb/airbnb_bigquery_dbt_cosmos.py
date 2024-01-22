@@ -78,7 +78,6 @@ def airbnb_dbt_cosmos():
     def ingest_data():
         for folder in DATA_DIRS:
             task_dict = {
-                    "refine_source_data": f"{folder}__refine_source_data",
                     "local_data_to_gcs": f"{folder}__upload_data_from_local_to_gcs",
                     "local_schema_to_gcs": f"{folder}__upload_schema_from_local_to_gcs",
                     "gcs_to_bigquery": f"{folder}__gcs_to_bigquery",
