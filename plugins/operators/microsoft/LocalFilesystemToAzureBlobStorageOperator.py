@@ -27,8 +27,11 @@ class LocalFilesystemToAzureBlobStorageOperator(LocalFilesystemToWasbOperatorBas
         success_log = []
         
         for file_path in glob_list:
-            blob_name = file_path.split('/')[-1]
-            blob_with_hive_partition = f'{ts.year}/{ts.month}/{ts.day}/{ts.hour}/{blob_name}'
+            blob_with_hive_partition = TusUtils.convert_file_path_into_hive_partition(
+                file_path=file_path,
+                datetime_var=ts,
+                level_of_partition="hour"
+            )
             self.log.info(
                 "Uploading %s to wasb://%s as %s",
                 file_path,
@@ -44,7 +47,7 @@ class LocalFilesystemToAzureBlobStorageOperator(LocalFilesystemToWasbOperatorBas
                 **self.load_options,
             )
 
-            success_log.append(file_path)
+            success_log.append(blob_with_hive_partition)
         
         return success_log
         

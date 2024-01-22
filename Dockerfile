@@ -10,4 +10,5 @@ RUN python3 -m venv /opt/airflow/dbt_venv
 RUN . /opt/airflow/dbt_venv/bin/activate && \
     pip install --no-cache-dir dbt-bigquery
 ENV PIP_USER=true
+RUN pip install pendulum
 CMD ["/opt/airflow/dbt_venv/bin/dbt"]
