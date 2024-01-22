@@ -12,3 +12,5 @@ logs/
 .python-version
 archived/
 .user.yml
+.DS_Store
+config/credentials/*

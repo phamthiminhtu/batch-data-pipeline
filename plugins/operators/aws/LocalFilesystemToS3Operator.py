@@ -34,7 +34,7 @@ class LocalFilesystemToS3Operator(LocalFilesystemToS3OperatorBase):
         utilities = TusUtils()
 
         if self.file_format == 'csv':
-            utilities._split_csv_file(infile_path=self.filename, output_path=tmp_file_path)
+            utilities.split_csv_file(infile_path=self.filename, output_path=tmp_file_path)
             glob_list = glob.glob(f'{tmp_file_path}*.{self.file_format}')
         else:
             glob_list = [self.filename] #TODO: support other file formats

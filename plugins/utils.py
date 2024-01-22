@@ -2,17 +2,20 @@ import os
 import sys
 import csv
 import json
+from datetime import datetime
+from airflow.settings import AIRFLOW_HOME
 
 
 class TusUtils:
     '''
+        Utilities.
     '''
 
     def __init__(self):
         pass
 
-    def _split_json_file(
-        self,
+    @staticmethod
+    def split_json_file(
         infile,
         row_limit=100,
         output_path='.',
@@ -30,8 +33,8 @@ class TusUtils:
                     json.dump(data[i:i+row_limit+1], outfile, ensure_ascii=False, indent=4)
                 outfile.close()
 
-    def _split_csv_file(
-        self,
+    @staticmethod
+    def split_csv_file(
         infile_path,
         delimiter=',',
         row_limit=100,
@@ -82,3 +85,37 @@ class TusUtils:
             current_out_writer.writerow(row)
         infile.close()
 
+    @staticmethod
+    def format_blob_name(
+            file_path,
+            datetime_var,
+            level_of_partition="hour",
+            is_hive_partitioned=True
+        ):
+        """
+            Convert file path into hive_partition file path.
+        """
+        datetime_components = {
+            'year': '%Y',
+            'month': '%m',
+            'day': '%d',
+            'hour': '%H',
+            'minute': '%M',
+            'second': '%S'
+        }
+        hive_partition = ''
+        for comp in datetime_components:
+            hive_partition += f"{comp}={datetime_var.strftime(datetime_components.get(comp))}/"
+            # only partition to the speficied level_of_partition
+            if comp == level_of_partition.lower():
+                break
+
+        file_format = file_path.split('.')[-1]
+        # .split('data/')[-1]: ignore the part before "data/" of the file path
+        blob_name = file_path.replace(f'.{file_format}', '').split('data/')[-1].replace(f'{AIRFLOW_HOME}/', '')
+        if is_hive_partitioned:
+            formatted_blob_name = f'{blob_name}/{hive_partition}*.{file_format}'
+        else:
+            formatted_blob_name = f'{blob_name}/*.{file_format}'
+
+        return formatted_blob_name

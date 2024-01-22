@@ -1,0 +1,10 @@
+bde:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: kafka-408805
+      dataset: airbnb_bigquery
+      threads: 4
+      location: australia-southeast1

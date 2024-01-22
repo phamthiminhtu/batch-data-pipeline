@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: host_stg
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - host_id
+            - updated_at
+  - name: property_stg
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - listing_id
+            - updated_at
+  - name: dim_suburb
+    columns:
+      - name: suburb_name
+        tests:
+          - unique
+  - name: dim_lga
+    columns:
+      - name: lga_code
+        tests:
+          - unique
+  - name: facts_listings
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: ref('listings_stg')
+      - equal_sum:
+          column_1: price
+          compare_to: source('airbnb_raw', 'listings')
+          column_2: price

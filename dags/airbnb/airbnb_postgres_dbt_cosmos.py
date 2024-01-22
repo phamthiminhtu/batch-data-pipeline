@@ -29,7 +29,7 @@ dag_default_args = {
     'wait_for_downstream': False,
 }
 
-DBT_PROJECT_PATH = f"{AIRFLOW_HOME}/dags/dbt/airbnb"
+DBT_PROJECT_PATH = f"{AIRFLOW_HOME}/dags/dbt/airbnb_postgres"
 # The path where Cosmos will find the dbt executable
 # in the virtual environment created in the Dockerfile
 DBT_EXECUTABLE_PATH = f"{AIRFLOW_HOME}/dbt_venv/bin/dbt"
@@ -68,6 +68,6 @@ my_cosmos_dag = DbtDag(
     schedule_interval=None,
     start_date=datetime(2023, 1, 1),
     catchup=False,
-    dag_id="airbnb_dbt_cosmos",
+    dag_id="airbnb_postgres_dbt_cosmos",
 )
 

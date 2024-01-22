@@ -1,0 +1,156 @@
+[
+    {
+      "name": "LISTING_ID",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "SCRAPE_ID",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "SCRAPED_DATE",
+      "mode": "",
+      "type": "DATE",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "HOST_ID",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "HOST_NAME",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "HOST_SINCE",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "HOST_IS_SUPERHOST",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "HOST_NEIGHBOURHOOD",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "LISTING_NEIGHBOURHOOD",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "PROPERTY_TYPE",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "ROOM_TYPE",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "ACCOMMODATES",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "PRICE",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "HAS_AVAILABILITY",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "AVAILABILITY_30",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "NUMBER_OF_REVIEWS",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "REVIEW_SCORES_RATING",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "REVIEW_SCORES_ACCURACY",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "REVIEW_SCORES_CLEANLINESS",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "REVIEW_SCORES_CHECKIN",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "REVIEW_SCORES_COMMUNICATION",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "REVIEW_SCORES_VALUE",
+      "mode": "",
+      "type": "FLOAT64",
+      "description": null,
+      "fields": []
+    }
+  ]

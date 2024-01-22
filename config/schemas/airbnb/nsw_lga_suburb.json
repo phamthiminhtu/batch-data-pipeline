@@ -1,0 +1,16 @@
+[
+    {
+      "name": "LGA_NAME",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    },
+    {
+      "name": "SUBURB_NAME",
+      "mode": "",
+      "type": "STRING",
+      "description": null,
+      "fields": []
+    }
+  ]
