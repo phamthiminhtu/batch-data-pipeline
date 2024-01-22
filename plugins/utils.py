@@ -86,10 +86,11 @@ class TusUtils:
         infile.close()
 
     @staticmethod
-    def convert_file_path_into_hive_partition(
+    def format_blob_name(
             file_path,
             datetime_var,
-            level_of_partition="hour"
+            level_of_partition="hour",
+            is_hive_partitioned=True
         ):
         """
             Convert file path into hive_partition file path.
@@ -112,6 +113,9 @@ class TusUtils:
         file_format = file_path.split('.')[-1]
         # .split('data/')[-1]: ignore the part before "data/" of the file path
         blob_name = file_path.replace(f'.{file_format}', '').split('data/')[-1].replace(f'{AIRFLOW_HOME}/', '')
-        blob_with_hive_partition = f'{blob_name}/{hive_partition}*.{file_format}'
+        if is_hive_partitioned:
+            formatted_blob_name = f'{blob_name}/{hive_partition}*.{file_format}'
+        else:
+            formatted_blob_name = f'{blob_name}/*.{file_format}'
 
-        return blob_with_hive_partition
+        return formatted_blob_name

@@ -5,7 +5,6 @@ class GCSToBigQueryOperator(GCSToBigQueryOperatorBase):
 
     def __init__(
         self,
-        schema_object=None,
         **kwargs
     ):
         super().__init__(**kwargs)

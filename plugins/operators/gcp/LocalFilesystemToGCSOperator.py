@@ -13,10 +13,12 @@ class LocalFilesystemToGCSOperator(LocalFilesystemToGCSOperatorBase):
     def __init__(
         self,
         connection_timeout=100000000,
+        is_hive_partitioned=True,
         **kwargs
     ):
         super().__init__(**kwargs)
         self.connection_timeout = connection_timeout
+        self.is_hive_partitioned = is_hive_partitioned
 
     def execute(self, context: Context) -> None:
         """Upload a file to Google Cloud Storage."""
@@ -43,19 +45,20 @@ class LocalFilesystemToGCSOperator(LocalFilesystemToGCSOperatorBase):
         success_log = []
         # modify self.dst into hive partition
         for filename in object_paths:
-            blob_with_hive_partition = TusUtils.convert_file_path_into_hive_partition(
+            blob_name = TusUtils.format_blob_name(
                 file_path=filename,
-                datetime_var=ts
+                datetime_var=ts,
+                is_hive_partitioned=self.is_hive_partitioned
             )
-            full_gcs_path = f"gcs://{self.bucket}/{blob_with_hive_partition}"
+            full_gcs_path = f"gcs://{self.bucket}/{blob_name}"
             self.log.info(f"Uploading {filename} to {full_gcs_path}")
             hook.upload(
                 filename=filename,
                 timeout=self.connection_timeout,
                 bucket_name=self.bucket,
-                object_name=blob_with_hive_partition
+                object_name=blob_name
             )
 
-            success_log.append(blob_with_hive_partition)
+            success_log.append(blob_name)
         self.log.info(f"Finish loading files from source {self.src}.")
         return success_log

@@ -39,6 +39,7 @@ BIGQUERY_CONN_ID = "google_cloud_connection"
 GCS_BUCKET_NAME = "batch-data-pipeline-airbnb"
 GCP_KEY_PATH = f"{AIRFLOW_HOME}/config/credentials/kafka-408805-key.json"
 DBT_PROJECT_PATH = f"{AIRFLOW_HOME}/dags/dbt/airbnb_bigquery"
+DATA_SCHEMA_RELATIVE_PATH = "config/schemas/airbnb"
 
 CENSUS_LGA_G01_COLUMNS = Variable.get('CENSUS_LGA_G01_COLUMNS')
 CENSUS_LGA_G02_COLUMNS = Variable.get('CENSUS_LGA_G02_COLUMNS')
@@ -80,7 +81,7 @@ def airbnb_dbt_cosmos():
             task_dict = {
                     "local_data_to_gcs": f"{folder}__upload_data_from_local_to_gcs",
                     "local_schema_to_gcs": f"{folder}__upload_schema_from_local_to_gcs",
-                    "gcs_to_bigquery": f"{folder}__gcs_to_bigquery",
+                    "gcs_to_bigquery": f"{folder}__append_only__gcs_to_bigquery",
                 }
 
             local_data_to_gcs = LocalFilesystemToGCSOperator(
@@ -93,18 +94,22 @@ def airbnb_dbt_cosmos():
 
             local_schema_to_gcs = LocalFilesystemToGCSOperator(
                 task_id=task_dict.get("local_schema_to_gcs"),
-                src=[f"{AIRFLOW_HOME}/config/schemas/airbnb/{folder}.json"],
+                src=[f"{AIRFLOW_HOME}/{DATA_SCHEMA_RELATIVE_PATH}/{folder}.json"],
                 bucket=GCS_BUCKET_NAME,
                 gcp_conn_id=BIGQUERY_CONN_ID,
-                dst=''
+                dst='',
+                is_hive_partitioned=False
             )
 
             gcs_to_bigquery = GCSToBigQueryOperator(
                 task_id=task_dict.get("gcs_to_bigquery"),
                 bucket=GCS_BUCKET_NAME,
                 source_objects=local_data_to_gcs.output, # XCOM now can be accessed via output https://www.astronomer.io/blog/advanced-xcom-configurations-and-trigger-rules-tips-and-tricks-to-level-up-your-airflow-dags/
-                destination_project_dataset_table=f"{GCP_PROJECT}.{BIGQUERY_DATASET}.{folder}",
-                gcp_conn_id=BIGQUERY_CONN_ID
+                destination_project_dataset_table=f"{GCP_PROJECT}.append_only__{BIGQUERY_DATASET}.{folder}",
+                gcp_conn_id=BIGQUERY_CONN_ID,
+                schema_object=f"{DATA_SCHEMA_RELATIVE_PATH}/{folder}/*.json",
+                write_disposition="WRITE_APPEND",
+                ignore_unknown_values=True
             )
 
             local_data_to_gcs >> local_schema_to_gcs >> gcs_to_bigquery

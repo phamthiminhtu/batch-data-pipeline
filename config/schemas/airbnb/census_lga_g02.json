@@ -9,63 +9,56 @@
     {
       "name": "Median_age_persons",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Median_mortgage_repay_monthly",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Median_tot_prsnl_inc_weekly",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Median_rent_weekly",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Median_tot_fam_inc_weekly",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Average_num_psns_per_bedroom",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Median_tot_hhd_inc_weekly",
       "mode": "",
-      "type": "INTEGER",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     },
     {
       "name": "Average_household_size",
       "mode": "",
-      "type": "INTEGER",
-      "description": null,
-      "fields": []
-    },
-    {
-      "name": "ingestion_timestamp",
-      "mode": "",
-      "type": "TIMESTAMP",
+      "type": "FLOAT64",
       "description": null,
       "fields": []
     }

@@ -27,7 +27,7 @@ class LocalFilesystemToAzureBlobStorageOperator(LocalFilesystemToWasbOperatorBas
         success_log = []
         
         for file_path in glob_list:
-            blob_with_hive_partition = TusUtils.convert_file_path_into_hive_partition(
+            blob_with_hive_partition = TusUtils.format_blob_name(
                 file_path=file_path,
                 datetime_var=ts,
                 level_of_partition="hour"
