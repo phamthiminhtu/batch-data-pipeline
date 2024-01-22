@@ -49,8 +49,8 @@ DATA_DIRS = {
     "census_lga_g01": CENSUS_LGA_G01_COLUMNS,
     "census_lga_g02": CENSUS_LGA_G02_COLUMNS,
     "listings": LISTINGS_COLUMNS,
-    "NSW_LGA_CODE": NSW_LGA_CODE_COLUMNS,
-    "NSW_LGA_SUBURB": NSW_LGA_SUBURB_COLUMNS
+    "nsw_lga_code": NSW_LGA_CODE_COLUMNS,
+    "nsw_lga_suburb": NSW_LGA_SUBURB_COLUMNS
 }
 
 # The path where Cosmos will find the dbt executable
