@@ -44,7 +44,7 @@ Up to now there are 3 main projects:
     - Code:
       - DAG location: [dags/airbnb/airbnb_bigquery_dbt_cosmos.py](https://github.com/phamthiminhtu/batch-data-pipeline/blob/master/dags/airbnb/airbnb_bigquery_dbt_cosmos.py)
       - dbt models: [dags/dbt/airbnb_bigquery](https://github.com/phamthiminhtu/batch-data-pipeline/tree/master/dags/dbt/airbnb_bigquery)
-    - Screen shot of the DAG:
+    - Example of the DAG:
 <img width="1393" alt="Screenshot 2024-01-22 at 22 49 00" src="https://github.com/phamthiminhtu/batch-data-pipeline/assets/56192840/1ee96e62-0846-4c32-9751-173721043415">
 
 
