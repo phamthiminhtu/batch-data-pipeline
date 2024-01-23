@@ -36,12 +36,13 @@ models:
     staging:
       +schema: staging
       +materialized: view
-    datamart:
-      +schema: datamart
-      +materialized: view
     warehouse:
       +schema: warehouse
       +materialized: table
+    datamart:
+      +schema: datamart
+      +materialized: view
+    
 
 snapshots:
   bde:
