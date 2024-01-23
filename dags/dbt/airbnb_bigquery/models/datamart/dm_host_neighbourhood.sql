@@ -4,7 +4,7 @@ WITH
   facts_listings AS
     (SELECT
       *,
-      DATE_TRUNC('month', scraped_date)::DATE AS month_year,
+      DATE_TRUNC(scraped_date, MONTH) AS month_year,
       CASE WHEN {{ is_active_listing }} THEN listing_id END AS active_listing_id,
       CASE WHEN {{ is_active_listing }} THEN price END AS active_listing_price,
       CASE WHEN {{ is_active_listing }} THEN 30 - availability_30 END AS number_of_stays
