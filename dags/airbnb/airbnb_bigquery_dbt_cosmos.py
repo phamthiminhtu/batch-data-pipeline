@@ -68,7 +68,7 @@ DBT_EXECUTABLE_PATH = f"{AIRFLOW_HOME}/dbt_venv/bin/dbt"
 )
 def airbnb_dbt_cosmos():
     """
-        Involve 3 parts:
+        Involve 2 parts:
             - Part 1: Ingest data
             - Part 2: Transform data
     """
