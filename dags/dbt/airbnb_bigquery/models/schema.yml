@@ -24,6 +24,12 @@ models:
         tests:
           - unique
   - name: facts_listings
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: listing_id
+        data_type: string
     tests:
       - dbt_utils.equal_rowcount:
           compare_model: ref('listings_stg')

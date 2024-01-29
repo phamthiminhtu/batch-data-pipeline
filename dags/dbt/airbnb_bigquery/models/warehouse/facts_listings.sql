@@ -14,7 +14,8 @@
 		},
 		materialized='incremental',
 		incremental_strategy='insert_overwrite',
-		partitions=model_params.partitions_quoted
+		partitions=model_params.partitions_quoted,
+		on_schema_change='append_new_columns'
 )
 }}
 
